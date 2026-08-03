@@ -35,23 +35,23 @@ Repo initialised with PRD, project rules, and this roadmap.
 
 ### Tasks
 
-- [ ] Create pnpm workspace: root `package.json`, `pnpm-workspace.yaml`, exactly the
+- [x] Create pnpm workspace: root `package.json`, `pnpm-workspace.yaml`, exactly the
       layout in PRD §3
-- [ ] `packages/shared/src/types.ts` — TypeScript types for `desired`, `reported`,
+- [x] `packages/shared/src/types.ts` — TypeScript types for `desired`, `reported`,
       `connection`, `events`, `meta` exactly matching PRD §4 (unions for
       `mode`, `motorState`, event `kind`; nullable `battery`, `overrideEndsAt`)
-- [ ] `packages/shared/src/protocol.ts` — serial protocol constants and
+- [x] `packages/shared/src/protocol.ts` — serial protocol constants and
       parse/serialise helpers for `STATE`, `EVENT`, `READY`, `SET`, `ACK`, `ERR`,
       `PING`/`PONG` lines per PRD §5, plus value ranges (position 0–100,
       tempLimit 18–35, lightLimit 0–1200, timeout 1–60) and defaults (26 / 700 / 15)
-- [ ] `packages/shared/src/paths.ts` — RTDB path helpers
+- [x] `packages/shared/src/paths.ts` — RTDB path helpers
       (`devicePath(id)`, `desiredPath(id)`, `reportedPath(id)`, `connectionPath(id)`,
       `eventsPath(id)`)
-- [ ] `.env.example` exactly as PRD §14
-- [ ] `database.rules.json` — auth required everywhere; authenticated user writes
+- [x] `.env.example` exactly as PRD §14
+- [x] `database.rules.json` — auth required everywhere; authenticated user writes
       `desired` only; bridge service account writes `reported`, `connection`,
       `events` only (PRD §4 Rules)
-- [ ] Add `build` and `typecheck` scripts to every package; update the Commands
+- [x] Add `build` and `typecheck` scripts to every package; update the Commands
       section of `CLAUDE.md` if commands differ
 
 ### 🧑 Human checkpoint — Firebase provisioning
@@ -65,11 +65,11 @@ Ask the user to:
 
 ### Verification
 
-- [ ] `pnpm install` succeeds from a clean checkout
-- [ ] `pnpm -r build` and `pnpm -r typecheck` pass with zero errors
-- [ ] `packages/shared` contains no `any`
-- [ ] Round-trip unit check: serialising then parsing a `STATE` line and a `SET`
-      command returns the original values
+- [x] `pnpm install` succeeds from a clean checkout
+- [x] `pnpm -r build` and `pnpm -r typecheck` pass with zero errors
+- [x] `packages/shared` contains no `any`
+- [x] Round-trip unit check: serialising then parsing a `STATE` line and a `SET`
+      command returns the original values (`pnpm -r test`)
 
 ---
 

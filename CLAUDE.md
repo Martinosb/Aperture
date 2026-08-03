@@ -73,11 +73,17 @@ prototype (PRD §0.1) wins on visual details. The roadmap wins on sequencing.
 
 ## Commands
 
-Populated as the workspace is built (Phase 1 adds the workspace):
+Packages are named `@aperture/shared`, `@aperture/bridge`, `@aperture/web`.
 
 - `pnpm install` — install all workspace dependencies
 - `pnpm -r build` — build every package
-- `pnpm -r typecheck` — typecheck every package (add this script in Phase 1)
-- `pnpm --filter bridge dev -- --mock` — run the bridge with synthetic telemetry
-- `pnpm --filter web dev` — run the PWA dev server
-- `arduino-cli compile --fqbn arduino:avr:uno firmware/aperture` — compile firmware
+- `pnpm -r typecheck` — typecheck every package
+- `pnpm -r test` — run every package's tests
+- `pnpm --filter @aperture/bridge dev --mock` — run the bridge with synthetic telemetry _(Phase 2)_
+- `pnpm --filter @aperture/web dev` — run the PWA dev server _(Phase 3)_
+- `arduino-cli compile --fqbn arduino:avr:uno firmware/aperture` — compile firmware _(Phase 7)_
+- `firebase deploy --only database` — deploy `database.rules.json`
+
+Tests use Node's built-in runner against TypeScript sources directly (Node 22+
+strips types natively) — there is no test framework dependency. Keep it that way:
+write `*.test.ts` beside the code, import with an explicit `.ts` extension.

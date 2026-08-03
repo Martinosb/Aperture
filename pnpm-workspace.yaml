@@ -1,0 +1,6 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+# esbuild ships a platform-specific binary from its install script; tsup needs it.
+allowBuilds:
+  esbuild: true

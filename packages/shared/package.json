@@ -1,0 +1,30 @@
+{
+  "name": "@aperture/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Types, serial protocol, and RTDB path helpers shared by the PWA and the bridge",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test src/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  }
+}

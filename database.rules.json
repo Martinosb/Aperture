@@ -1,0 +1,54 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "devices": {
+      "$deviceId": {
+        ".read": "auth != null",
+
+        "meta": {
+          ".write": false
+        },
+
+        "desired": {
+          ".write": "auth != null",
+
+          "position": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+          },
+          "mode": {
+            ".validate": "newData.isString() && (newData.val() === 'auto' || newData.val() === 'manual')"
+          },
+          "tempLimit": {
+            ".validate": "newData.isNumber() && newData.val() >= 18 && newData.val() <= 35"
+          },
+          "lightLimit": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 1200"
+          },
+          "overrideTimeoutMin": {
+            ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 60"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        },
+
+        "reported": {
+          ".write": false
+        },
+
+        "connection": {
+          ".write": false
+        },
+
+        "events": {
+          ".write": false
+        }
+      }
+    }
+  }
+}
