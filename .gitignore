@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Builds
+.next/
+out/
+dist/
+build/
+.turbo/
+
+# Secrets — never commit these (PRD §14)
+.env
+.env.local
+.env*.local
+service-account.json
+*.pem
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Test coverage
+coverage/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Firmware build artifacts
+firmware/**/build/
+*.hex
+*.elf
