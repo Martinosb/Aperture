@@ -10,9 +10,11 @@
   "scripts": {
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test"
+    "test": "pnpm -r test",
+    "emulators": "firebase emulators:start --only database,auth --project aperture-local"
   },
   "devDependencies": {
+    "firebase-tools": "^15.25.1",
     "typescript": "^5.9.3"
   }
 }

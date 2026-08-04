@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (PRD §9, matching the Claude Design prototype exactly).
+ * Declared once here and mapped into the Tailwind theme so they are usable as
+ * utilities — text-ink, bg-tile, and so on.
+ */
+@theme {
+  --color-sun: #ffc42e;
+  --color-ember: #f59a0b;
+  --color-shade: #4a6572;
+  --color-ink: #14110d;
+  --color-ink-soft: #6b6459;
+  --color-ink-faint: #a39c90;
+  --color-tile: #f4f2ed;
+  --color-tile-sunk: #e8e5de;
+  --color-live: #34c77b;
+  --color-alert: #e5484d;
+  --color-canvas: #fff6dc;
+
+  --radius-tile: 28px;
+  --radius-nested: 20px;
+
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+:root {
+  /* The two ambient canvases. Both are always mounted; only opacity changes, so
+     the change between them is a genuine 1200ms cross-fade rather than a jump. */
+  --gradient-heat: linear-gradient(135deg, #fff6dc 0%, #ffe9a8 45%, #ffc42e 100%);
+  --gradient-comfortable: linear-gradient(135deg, #edf2f5 0%, #dce6ec 45%, #a8bcc9 100%);
+
+  --shadow-tile: 0 2px 8px rgba(20, 17, 13, 0.04), 0 12px 32px rgba(20, 17, 13, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  /* Telemetry is realtime; a rubber-band scroll that reveals white is jarring. */
+  overscroll-behavior-y: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* The connection dot and the "Adjusting…" chip both breathe. */
+@keyframes apPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.5);
+  }
+}
+
+@utility tile {
+  background: var(--color-tile);
+  border-radius: var(--radius-tile);
+  box-shadow: var(--shadow-tile);
+}
+
+/*
+ * Motion carries state here — a slat that snaps reads as a different machine
+ * than one that eases. So reduced motion shortens durations rather than
+ * removing them (PRD §15).
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 150ms !important;
+    animation-duration: 150ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

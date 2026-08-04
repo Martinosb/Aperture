@@ -82,7 +82,12 @@ Packages are named `@aperture/shared`, `@aperture/bridge`, `@aperture/web`.
 - `pnpm --filter @aperture/bridge dev --mock` — run the bridge with synthetic telemetry _(Phase 2)_
 - `pnpm --filter @aperture/web dev` — run the PWA dev server _(Phase 3)_
 - `arduino-cli compile --fqbn arduino:avr:uno firmware/aperture` — compile firmware _(Phase 7)_
+- `pnpm emulators` — run the local Realtime Database + Auth emulators
 - `firebase deploy --only database` — deploy `database.rules.json`
+
+Local development runs against the Firebase emulator, so no cloud project is
+needed. `.env` sets `FIREBASE_DATABASE_EMULATOR_HOST` and the matching
+`NEXT_PUBLIC_*` variables; clearing them points both apps at the real project.
 
 Tests use Node's built-in runner against TypeScript sources directly (Node 22+
 strips types natively) — there is no test framework dependency. Keep it that way:

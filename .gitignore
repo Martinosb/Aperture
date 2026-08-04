@@ -21,6 +21,9 @@ service-account.json
 npm-debug.log*
 pnpm-debug.log*
 
+# TypeScript incremental build state
+*.tsbuildinfo
+
 # Test coverage
 coverage/
 

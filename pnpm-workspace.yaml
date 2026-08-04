@@ -1,6 +1,12 @@
 packages:
   - "apps/*"
   - "packages/*"
-# esbuild ships a platform-specific binary from its install script; tsup needs it.
+# Packages whose install scripts fetch or compile a platform-specific binary.
+# esbuild backs tsup; bindings-cpp is the native serial layer; sharp is Next's
+# image pipeline.
 allowBuilds:
+  '@firebase/util': true
+  '@serialport/bindings-cpp': true
   esbuild: true
+  protobufjs: true
+  sharp: true

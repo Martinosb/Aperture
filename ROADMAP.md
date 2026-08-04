@@ -54,7 +54,11 @@ Repo initialised with PRD, project rules, and this roadmap.
 - [x] Add `build` and `typecheck` scripts to every package; update the Commands
       section of `CLAUDE.md` if commands differ
 
-### 🧑 Human checkpoint — Firebase provisioning
+### 🧑 Human checkpoint — Firebase provisioning _(deferred)_
+
+Development runs against the local Firebase emulator (`pnpm emulators`), which
+needs no cloud project — so phases 2–6 are unblocked. The real project is still
+required before anyone can reach the app from a phone off this machine.
 
 Ask the user to:
 - [ ] Create a Firebase project and enable **Realtime Database**
@@ -80,31 +84,31 @@ Ask the user to:
 
 ### Tasks
 
-- [ ] Bridge skeleton: `commander` CLI, `dotenv` config, `pino` logging, zod-validated
+- [x] Bridge skeleton: `commander` CLI, `dotenv` config, `pino` logging, zod-validated
       env; builds with `tsup`, runs with `node dist/index.js`
-- [ ] `--mock` mode: synthetic telemetry with a diurnal light curve, temperature
+- [x] `--mock` mode: synthetic telemetry with a diurnal light curve, temperature
       drifting with light, and an automation loop mirroring firmware logic
       (thresholds + hysteresis ±1.5 °C / ±60 lux)
-- [ ] Write throttling: publish to `/reported` on meaningful change only
+- [x] Write throttling: publish to `/reported` on meaningful change only
       (ΔT ≥ 0.3 °C, ΔL ≥ 25 lux, ΔH ≥ 2 %, any position/mode/motorState change) or a
       30 s heartbeat; debounce 500 ms
-- [ ] `/desired` listener: diff against last known desired, act only on changed
+- [x] `/desired` listener: diff against last known desired, act only on changed
       fields, mirror into `/reported` (mock "executes" instantly with a short
       simulated motor delay and `motorState: "moving"`)
-- [ ] Presence: `connection/online = true` on connect, `onDisconnect()` flips it
+- [x] Presence: `connection/online = true` on connect, `onDisconnect()` flips it
       false with server-timestamp `lastSeen`; heartbeat `lastSeen` every 20 s
-- [ ] Events: push mock `auto`/`manual` events to `/events`, trim to newest 100
-- [ ] Live status line output per PRD §7 CLI output
+- [x] Events: push mock `auto`/`manual` events to `/events`, trim to newest 100
+- [x] Live status line output per PRD §7 CLI output
 
 ### Verification
 
-- [ ] Run `--mock`; in the Firebase console, `/reported` updates and respects the
+- [x] Run `--mock`; in the Firebase console, `/reported` updates and respects the
       throttling rules
-- [ ] Edit `/desired/position` in the console → mock moves, `/reported` follows,
+- [x] Edit `/desired/position` in the console → mock moves, `/reported` follows,
       an event appears
-- [ ] Kill the process (SIGKILL, not graceful) → within ~60 s Firebase itself flips
+- [x] Kill the process (SIGKILL, not graceful) → within ~60 s Firebase itself flips
       `connection/online` to `false`
-- [ ] Generate >100 events → `/events` stays capped at 100
+- [x] Generate >100 events → `/events` stays capped at 100
 
 ---
 
