@@ -173,7 +173,7 @@ export default function ControlScreen(): React.JSX.Element {
             }
           }}
         />
-        <div className="text-center text-[12px] text-ink-faint">
+        <div className="text-center text-[12px] text-ink-soft">
           {locked ? "Reconnect the window unit to move the blinds." : "Drag the knob — the slats follow."}
         </div>
       </Tile>

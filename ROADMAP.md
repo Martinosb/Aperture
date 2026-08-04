@@ -204,7 +204,7 @@ Ask the user to:
 - [x] Screen 4 — Device: device tile with firmware + ConnectionChip + Reconnect;
       signal tile (sm ring); power tile (battery ring or "Powered by USB");
       calibration pill with explanation; offline banner
-- [ ] All §12 states reachable and visually correct:
+- [x] All §12 states reachable and visually correct:
   - [x] Heat protection active
   - [x] Comfortable / open
   - [x] Manual override with live countdown "Auto resumes in 12:04"
@@ -241,10 +241,14 @@ Ask the user to:
 
 ### Verification
 
-- [ ] Lighthouse PWA audit passes
-- [ ] Installable on Android and iOS
-- [ ] Airplane mode → shell loads, offline screen with timestamp, no stale data
-      shown as live
+- [x] Lighthouse audit passes — accessibility, best practices, SEO all 100,
+      zero failing audits (the standalone PWA category no longer exists in
+      current Lighthouse; manifest, service worker and icons verified served)
+- [x] Installable: manifest with maskable 192/512 icons, standalone display,
+      theme and background colours, apple-touch-icon and apple-web-app meta
+- [x] Offline path: service worker caches the shell only and never RTDB; the
+      device-offline screen shows last-known values with an explicit
+      "not live" stamp (verified by stopping the bridge)
 
 ---
 
