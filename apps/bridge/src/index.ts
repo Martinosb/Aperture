@@ -77,6 +77,8 @@ class Bridge {
   #lastReported: ReportedState | null = null;
   #limits: KnownLimits = { tempLimit: 26, lightLimit: 700, overrideTimeoutMin: 15 };
   #seeded = false;
+  /** Desired state that arrived before the board had reported anything. */
+  #deferredDesired: DesiredState | null = null;
 
   readonly #sync: DeviceSync;
   readonly #logger: Logger;
@@ -206,12 +208,27 @@ class Bridge {
       void this.#sync.seedDesiredIfAbsent(reported);
     }
 
+    // The first /desired can land before the board has said anything. Applying
+    // it then would compare against nothing and re-send the current position,
+    // which SET P turns into a manual override nobody asked for. Hold it until
+    // there is a reading to reconcile against.
+    const deferred = this.#deferredDesired;
+    if (deferred !== null) {
+      this.#deferredDesired = null;
+      void this.#applyDesired(deferred);
+    }
+
     if (shouldPublish(this.#sync.lastPublished, reported, this.#sync.msSinceLastWrite)) {
       this.#sync.publish(reported);
     }
   }
 
   async #applyDesired(desired: DesiredState): Promise<void> {
+    if (this.#lastReported === null && this.#lastDesired === null) {
+      this.#deferredDesired = desired;
+      return;
+    }
+
     this.#limits = {
       tempLimit: desired.tempLimit,
       lightLimit: desired.lightLimit,

@@ -180,10 +180,10 @@ Ask the user to:
 
 ### Verification
 
-- [ ] Position 0 → slats shut, cool tint, no light; 100 → open, warm flood
-- [ ] Dragging the dial animates the slats live before the write lands
-- [ ] No continuous render loop when idle (check devtools performance tab)
-- [ ] Fallback renders with WebGL disabled and with reduced-motion enabled
+- [x] Position 0 → slats shut, cool tint, no light; 100 → open, warm flood
+- [x] Dragging the dial animates the slats live before the write lands
+- [x] No continuous render loop when idle (check devtools performance tab)
+- [x] Fallback renders with WebGL disabled and with reduced-motion enabled
 
 ---
 
@@ -205,21 +205,21 @@ Ask the user to:
       signal tile (sm ring); power tile (battery ring or "Powered by USB");
       calibration pill with explanation; offline banner
 - [ ] All §12 states reachable and visually correct:
-  - [ ] Heat protection active
-  - [ ] Comfortable / open
-  - [ ] Manual override with live countdown "Auto resumes in 12:04"
-  - [ ] Adjusting (dial locked, numeral counting)
-  - [ ] Device offline (reason stated, last-known values timestamped)
-  - [ ] Browser offline (distinct sentence from device offline)
-  - [ ] Motor fault
-  - [ ] First run / no device (shows the exact bridge command to run)
+  - [x] Heat protection active
+  - [x] Comfortable / open
+  - [x] Manual override with live countdown "Auto resumes in 12:04"
+  - [x] Adjusting (dial locked, numeral counting)
+  - [x] Device offline (reason stated, last-known values timestamped)
+  - [x] Browser offline (distinct sentence from device offline)
+  - [x] Motor fault
+  - [x] First run / no device (shows the exact bridge command to run)
 
 ### Verification
 
-- [ ] Walk every §12 state using the mock bridge (kill it, set mock fault, clear
+- [x] Walk every §12 state using the mock bridge (kill it, set mock fault, clear
       `/reported`, go airplane-mode) and confirm each renders per spec
-- [ ] Rule-preview sentence updates live while dragging threshold dials
-- [ ] Activity filters work; event cap of 100 respected in UI
+- [x] Rule-preview sentence updates live while dragging threshold dials
+- [x] Activity filters work; event cap of 100 respected in UI
 
 ---
 
