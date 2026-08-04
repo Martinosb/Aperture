@@ -11,7 +11,8 @@
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
-    "emulators": "firebase emulators:start --only database,auth --project aperture-local"
+    "emulators": "firebase emulators:start --only database,auth --project aperture-local",
+    "sync-env": "node scripts/sync-env.mjs"
   },
   "devDependencies": {
     "firebase-tools": "^15.25.1",

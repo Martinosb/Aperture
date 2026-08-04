@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test src/lib/*.test.ts"
+    "test": "node --test src/lib/*.test.ts",
+    "predev": "node ../../scripts/sync-env.mjs",
+    "prebuild": "node ../../scripts/sync-env.mjs"
   },
   "dependencies": {
     "@aperture/shared": "workspace:*",
@@ -28,6 +30,7 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
     "@types/three": "^0.182.0",
+    "dotenv": "^17.4.2",
     "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3"
   }

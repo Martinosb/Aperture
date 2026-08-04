@@ -1,0 +1,25 @@
+{
+  "name": "Aperture — window blinds",
+  "short_name": "Aperture",
+  "description": "Monitor and override an automated window blind from anywhere.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#FFC42E",
+  "background_color": "#FFF6DC",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

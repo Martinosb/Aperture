@@ -103,6 +103,9 @@ importers:
       '@types/three':
         specifier: ^0.182.0
         version: 0.182.0
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
       tailwindcss:
         specifier: ^4.1.16
         version: 4.3.3

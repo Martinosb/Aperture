@@ -19,6 +19,7 @@ interface CliOptions {
   mock: boolean;
   port?: string;
   daySeconds: string;
+  startPhase: string;
   scenario: MockScenario;
 }
 
@@ -33,6 +34,11 @@ async function main(): Promise<void> {
       "--day-seconds <seconds>",
       "real seconds one simulated day lasts in mock mode",
       String(MOCK_DEFAULTS.daySeconds),
+    )
+    .option(
+      "--start-phase <fraction>",
+      "time of day the mock starts at: 0 is midnight, 0.5 is noon",
+      String(MOCK_DEFAULTS.startPhase),
     )
     .option("--scenario <name>", "mock scenario: normal or fault", MOCK_DEFAULTS.scenario)
     .parse();
@@ -98,10 +104,14 @@ class Bridge {
   async #createTransport(): Promise<LineTransport | null> {
     if (this.#options.mock) {
       const daySeconds = Number(this.#options.daySeconds);
+      const startPhase = Number(this.#options.startPhase);
       return new MockBoard({
         daySeconds: Number.isFinite(daySeconds) && daySeconds > 0 ? daySeconds : MOCK_DEFAULTS.daySeconds,
         scenario: this.#options.scenario === "fault" ? "fault" : "normal",
-        startPhase: MOCK_DEFAULTS.startPhase,
+        startPhase:
+          Number.isFinite(startPhase) && startPhase >= 0 && startPhase < 1
+            ? startPhase
+            : MOCK_DEFAULTS.startPhase,
       });
     }
 

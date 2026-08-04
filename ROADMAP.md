@@ -119,41 +119,44 @@ Ask the user to:
 
 ### 🧑 Human checkpoint — design import
 
-- [ ] Ask the user to run `/design-login`, then import the Claude Design project from
-      PRD §0.1 and read `Aperture.dc.html` and `support.js`
-- [ ] If the MCP is unreachable, say so explicitly and build from PRD §9–11 — do not
-      invent a different visual direction
+- [x] Ask the user to run `/design-login`, then import the Claude Design project from
+      PRD §0.1 and read `Aperture.dc.html` and `support.js` — the MCP was reachable
+      and `Aperture.dc.html` plus `Dial.dc.html` were read in full
+- [x] If the MCP is unreachable, say so explicitly and build from PRD §9–11 — not
+      needed; the prototype drove the tokens, geometry and copy
 
 ### Tasks
 
-- [ ] Next.js 16 app in `apps/web`: App Router, TS strict, Tailwind; design tokens
+- [x] Next.js 16 app in `apps/web`: App Router, TS strict, Tailwind; design tokens
       from PRD §9 as CSS custom properties in `globals.css`, mapped into the
       Tailwind theme
-- [ ] Install shadcn/ui: Button, Switch, Sheet, Tabs, Skeleton, Sonner
-- [ ] `lib/firebase/device.ts`: `useDevice()`, `setDesired(patch)` (shallow merge +
+- [x] Install shadcn/ui primitives — Sonner is used for toasts; the pills,
+      toggles and dials are hand-built because the prototype (which wins on
+      visuals) specifies geometry no stock primitive matches
+- [x] `lib/firebase/device.ts`: `useDevice()`, `setDesired(patch)` (shallow merge +
       server timestamp), `useEvents(limit)`. All mutations go through `setDesired`;
       no component writes Firebase directly
-- [ ] Zustand store fed by the subscription; track the three connection layers
+- [x] Zustand store fed by the subscription; track the three connection layers
       separately (browser↔Firebase, bridge↔Firebase, bridge↔Arduino freshness)
-- [ ] `RadialDial` component per PRD §10: 240° arc, six layers, drag + tap + full
+- [x] `RadialDial` component per PRD §10: 240° arc, six layers, drag + tap + full
       keyboard support, `role="slider"` ARIA, sizes `lg`/`md`/`sm`, 400 ms debounce
       before `setDesired`
-- [ ] Screen 1 (Control) per PRD §11: top bar with ConnectionChip, hero placeholder
+- [x] Screen 1 (Control) per PRD §11: top bar with ConnectionChip, hero placeholder
       for the 3D window (Phase 4), lg dial, Auto/Manual SegmentedPill with
       explanation line, sensor tile row, StatusBanner; ambient canvas gradient
       cross-fading 1200 ms with thermal state
-- [ ] "Adjusting…" flow per PRD §2: fire on write, reconcile on `reported`, 5 s
+- [x] "Adjusting…" flow per PRD §2: fire on write, reconcile on `reported`, 5 s
       timeout → "The window unit isn't responding" and revert dial
 
 ### Verification
 
-- [ ] With the mock bridge running: drag the dial on the phone/browser → mock reacts →
+- [x] With the mock bridge running: drag the dial on the phone/browser → mock reacts →
       `reported` flows back and the UI reconciles (full cloud round trip)
-- [ ] Dragging the dial produces one Firebase write per gesture, not fifty
-- [ ] Stop the mock bridge → UI shows the device-offline state, controls disabled
+- [x] Dragging the dial produces one Firebase write per gesture, not fifty
+- [x] Stop the mock bridge → UI shows the device-offline state, controls disabled
       with a stated reason
-- [ ] Dial fully keyboard-operable; screen reader announces value text
-- [ ] `pnpm -r typecheck` passes; layout correct at 360 px portrait
+- [x] Dial fully keyboard-operable; screen reader announces value text
+- [x] `pnpm -r typecheck` passes; layout correct at 360 px portrait
 
 ---
 
@@ -164,16 +167,16 @@ Ask the user to:
 
 ### Tasks
 
-- [ ] `WindowObject` with the exact props in PRD §10; individual slat meshes rotating
+- [x] `WindowObject` with the exact props in PRD §10; individual slat meshes rotating
       on their long axis
-- [ ] Directional sun light with intensity mapped from `lightLevel`; striped shadows
+- [x] Directional sun light with intensity mapped from `lightLevel`; striped shadows
       through slat gaps onto a floor plane, contrast scaling with light
-- [ ] Slat rotation animates 900 ms `cubic-bezier(0.4, 0, 0.2, 1)`; drives from
+- [x] Slat rotation animates 900 ms `cubic-bezier(0.4, 0, 0.2, 1)`; drives from
       `reported`, animates toward target during "Adjusting…"
-- [ ] Hero percentage numeral overlapping the lower-left of the object
-- [ ] Performance: DPR capped at 2, `frameloop="demand"` + invalidate on state
+- [x] Hero percentage numeral overlapping the lower-left of the object
+- [x] Performance: DPR capped at 2, `frameloop="demand"` + invalidate on state
       change, dispose geometries on unmount
-- [ ] Static SVG fallback for `prefers-reduced-motion` and WebGL-unavailable
+- [x] Static SVG fallback for `prefers-reduced-motion` and WebGL-unavailable
 
 ### Verification
 
@@ -191,14 +194,14 @@ Ask the user to:
 
 ### Tasks
 
-- [ ] Screen 2 — Automation: two md dials (Close blinds above 18–35 °C amber,
+- [x] Screen 2 — Automation: two md dials (Close blinds above 18–35 °C amber,
       Sunlight trigger 0–1200 lux slate) with helper lines; **live rule-preview
       sentence** rebuilt from dial values + current readings as the dials drag;
       "Reset to defaults" pill; the three toggle rows
-- [ ] Screen 3 — Activity: summary tile with count + closed-proportion bar; working
+- [x] Screen 3 — Activity: summary tile with count + closed-proportion bar; working
       filter pills (All/Auto/Manual/Alerts); timeline tiles with icon badge, plain
       description, relative time, slat-position glyph; empty state per spec
-- [ ] Screen 4 — Device: device tile with firmware + ConnectionChip + Reconnect;
+- [x] Screen 4 — Device: device tile with firmware + ConnectionChip + Reconnect;
       signal tile (sm ring); power tile (battery ring or "Powered by USB");
       calibration pill with explanation; offline banner
 - [ ] All §12 states reachable and visually correct:
@@ -227,13 +230,13 @@ Ask the user to:
 
 ### Tasks
 
-- [ ] `manifest.json`: name, short name, `display: standalone`,
+- [x] `manifest.json`: name, short name, `display: standalone`,
       `theme_color #FFC42E`, `background_color #FFF6DC`, maskable icons 192 + 512
-- [ ] Service worker caching the app shell only — **never** Firebase RTDB responses
-- [ ] Offline screen: last-known values with explicit "last updated" stamp and
+- [x] Service worker caching the app shell only — **never** Firebase RTDB responses
+- [x] Offline screen: last-known values with explicit "last updated" stamp and
       offline banner; cached numbers never presented as current
-- [ ] `apple-touch-icon`, `apple-mobile-web-app-capable`, install prompt
-- [ ] Safe-area insets for notched devices; visible keyboard focus everywhere;
+- [x] `apple-touch-icon`, `apple-mobile-web-app-capable`, install prompt
+- [x] Safe-area insets for notched devices; visible keyboard focus everywhere;
       reduced-motion shortens slat/dial motion to 150 ms (not removed)
 
 ### Verification

@@ -43,6 +43,8 @@ export interface DeviceStore {
   pendingSince: number | null;
   /** Set when the unit did not respond in time. */
   unresponsive: boolean;
+  /** Set when a Firebase listener rejected, e.g. on a rules failure. */
+  listenerError: string | null;
 
   setMeta: (meta: DeviceMeta | null) => void;
   setReported: (reported: ReportedState | null) => void;
@@ -54,6 +56,7 @@ export interface DeviceStore {
   beginPending: (patch: DesiredPatch) => void;
   clearPending: () => void;
   setUnresponsive: (value: boolean) => void;
+  setListenerError: (message: string | null) => void;
 }
 
 export const useDeviceStore = create<DeviceStore>((set) => ({
@@ -67,6 +70,7 @@ export const useDeviceStore = create<DeviceStore>((set) => ({
   pending: null,
   pendingSince: null,
   unresponsive: false,
+  listenerError: null,
 
   setMeta: (meta) => set({ meta }),
   setReported: (reported) => set({ reported }),
@@ -85,4 +89,5 @@ export const useDeviceStore = create<DeviceStore>((set) => ({
 
   clearPending: () => set({ pending: null, pendingSince: null }),
   setUnresponsive: (unresponsive) => set({ unresponsive }),
+  setListenerError: (listenerError) => set({ listenerError }),
 }));

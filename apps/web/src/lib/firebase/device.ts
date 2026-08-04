@@ -51,7 +51,16 @@ export function startDeviceSubscription(): () => void {
   const { db } = getFirebase();
   const unsubscribers: (() => void)[] = [];
 
-  void ensureSignedIn().catch(() => {
+  // A listener that dies quietly leaves the dashboard looking merely empty,
+  // which is indistinguishable from "no device yet". Say so instead.
+  const onListenerError = (path: string) => (error: Error) => {
+    console.error(`[aperture] listener failed on ${path}:`, error.message);
+    store.setListenerError(error.message);
+    store.setReady(true);
+  };
+
+  void ensureSignedIn().catch((error: unknown) => {
+    console.error("[aperture] sign-in failed:", error);
     // Rules require auth; without it the listeners below stay empty and the UI
     // falls back to its "no device" state rather than hanging on a spinner.
     store.setReady(true);
@@ -61,20 +70,20 @@ export function startDeviceSubscription(): () => void {
   unsubscribers.push(
     onValue(ref(db, ".info/connected"), (snapshot) => {
       store.setBrowserOnline(snapshot.val() === true);
-    }),
+    }, onListenerError(".info/connected")),
   );
 
   unsubscribers.push(
     onValue(ref(db, reportedPath(DEVICE_ID)), (snapshot) => {
       store.setReported(snapshot.exists() ? (snapshot.val() as ReportedState) : null);
       store.setReady(true);
-    }),
+    }, onListenerError("reported")),
   );
 
   unsubscribers.push(
     onValue(ref(db, desiredPath(DEVICE_ID)), (snapshot) => {
       store.setDesiredState(snapshot.exists() ? (snapshot.val() as DesiredState) : null);
-    }),
+    }, onListenerError("desired")),
   );
 
   // Layer 2 — the bridge's link to Firebase, maintained server-side by
@@ -82,13 +91,13 @@ export function startDeviceSubscription(): () => void {
   unsubscribers.push(
     onValue(ref(db, connectionPath(DEVICE_ID)), (snapshot) => {
       store.setConnection(snapshot.exists() ? (snapshot.val() as ConnectionState) : null);
-    }),
+    }, onListenerError("connection")),
   );
 
   unsubscribers.push(
     onValue(ref(db, metaPath(DEVICE_ID)), (snapshot) => {
       store.setMeta(snapshot.exists() ? (snapshot.val() as DeviceMeta) : null);
-    }),
+    }, onListenerError("meta")),
   );
 
   unsubscribers.push(
@@ -101,7 +110,7 @@ export function startDeviceSubscription(): () => void {
       });
       events.reverse(); // newest first
       store.setEvents(events);
-    }),
+    }, onListenerError("events")),
   );
 
   return () => {
